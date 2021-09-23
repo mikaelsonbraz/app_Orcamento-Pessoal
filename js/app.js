@@ -64,7 +64,7 @@ function cadastrarDespesa() {
 	)
 
 	if (despesa.validarDados()) { //se a função retornar true os dados serão gravados
-		//bd.gravar(despesa)
+		bd.gravar(despesa)
 		//dialogo de sucess
 		document.getElementById('modal_titulo_div').className = 'modal-header text-success'
 		document.getElementById('modal_titulo').innerHTML = 'Gravação de dados concluída'
