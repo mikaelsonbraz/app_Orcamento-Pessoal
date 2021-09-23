@@ -7,6 +7,15 @@ class Despesa {
 		this.descricao = descricao
 		this.valor = valor
 	}
+
+	validarDados() {
+		for(let i in this) {
+			if(this[i] == undefined || this[i] == '' || this[i] == null) {
+				return false
+			}
+		}
+		return true
+	}
 }
 
 class Bd {
@@ -54,5 +63,23 @@ function cadastrarDespesa() {
 		valor.value
 	)
 
-	bd.gravar(despesa)
+	if (despesa.validarDados()) { //se a função retornar true os dados serão gravados
+		//bd.gravar(despesa)
+		//dialogo de sucess
+		document.getElementById('modal_titulo_div').className = 'modal-header text-success'
+		document.getElementById('modal_titulo').innerHTML = 'Gravação de dados concluída'
+		document.getElementById('modal_msg').innerHTML = 'Dados inseridos com sucesso e prontos para serem visualizados'
+		document.getElementById('btn-voltar').className = 'btn btn-success'
+
+		$('#modalRegistrarDespesa').modal('show')
+	} else {
+		//dialogo de error
+		document.getElementById('modal_titulo_div').className = 'modal-header text-danger'
+		document.getElementById('modal_titulo').innerHTML = 'Erro na gravação dos dados'
+		document.getElementById('modal_msg').innerHTML = 'Os dados foram inseridos incorretamente'
+		document.getElementById('btn-voltar').className = 'btn btn-danger'
+
+		$('#modalRegistrarDespesa').modal('show')
+	}
+	
 }
