@@ -40,6 +40,26 @@ class Bd {
 
 		localStorage.setItem('id', id)
 	}
+
+	recuperarTodosRegistros() {
+		//Array para adicionar todas as despesas
+		let despesas = Array()
+
+		let id = localStorage.getItem('id')
+
+		//Laço para recuperar todas as despesas cadastradas em localStorage
+		for (let i = 1; i <= id; i++) {
+			let despesa = JSON.parse(localStorage.getItem(i))
+			if (despesa === null) {
+				continue
+			}
+			
+			despesas.push(despesa)
+			
+		}
+
+	return despesas
+	}
 }
 
 let bd = new Bd()
@@ -72,6 +92,13 @@ function cadastrarDespesa() {
 		document.getElementById('btn-voltar').className = 'btn btn-success'
 
 		$('#modalRegistrarDespesa').modal('show')
+
+		ano.value = ''
+		mes.value = ''
+		dia.value = ''
+		tipo.value = ''
+		descricao.value = ''
+		valor.value = ''
 	} else {
 		//dialogo de error
 		document.getElementById('modal_titulo_div').className = 'modal-header text-danger'
@@ -82,4 +109,40 @@ function cadastrarDespesa() {
 		$('#modalRegistrarDespesa').modal('show')
 	}
 	
+}
+
+function carregaListaDespesas() {
+	let despesas = Array()
+	despesas = bd.recuperarTodosRegistros()
+
+	//selecionando o tbody e colocando dentro de uma variavel
+	var listaDespesas = document.getElementById('listaDespesas')
+
+	despesas.forEach(function(d) {
+
+		//criando as <tr></tr>
+		let linha = listaDespesas.insertRow()
+
+		//criando as <td></td>
+		linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`
+		
+		//ajustar o tipo de id pro nome
+		switch (parseInt(d.tipo)) {
+			case 1: d.tipo = 'Alimentação';
+				break;
+			case 2: d.tipo = 'Educação';
+				break;
+			case 3: d.tipo = 'Lazer';
+				break;
+			case 4: d.tipo = 'Saúde';
+				break;
+			case 5: d.tipo = 'Transporte';
+				break;
+		}
+
+		linha.insertCell(1).innerHTML = d.tipo
+		linha.insertCell(2).innerHTML = d.descricao
+		linha.insertCell(3).innerHTML = d.valor
+	})
+
 }
