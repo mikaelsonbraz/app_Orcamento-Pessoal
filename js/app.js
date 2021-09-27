@@ -111,20 +111,20 @@ let bd = new Bd()
 
 function cadastrarDespesa() {
 
-	let ano = document.getElementById('ano')
-	let mes = document.getElementById('mes')
-	let dia = document.getElementById('dia')
-	let tipo = document.getElementById('tipo')
-	let descricao = document.getElementById('descricao')
-	let valor = document.getElementById('valor')
+	let ano = document.getElementById('ano').value
+	let mes = document.getElementById('mes').value
+	let dia = document.getElementById('dia').value
+	let tipo = document.getElementById('tipo').value
+	let descricao = document.getElementById('descricao').value
+	let valor = document.getElementById('valor').value
 
 	let despesa = new Despesa(
-		ano.value, 
-		mes.value, 
-		dia.value, 
-		tipo.value, 
-		descricao.value,
-		valor.value
+		ano,
+		mes, 
+		dia,
+		tipo,
+		descricao,
+		valor,
 	)
 
 	if (despesa.validarDados()) { //se a função retornar true os dados serão gravados
@@ -227,4 +227,15 @@ function pesquisarDespesa() {
 	let despesas = bd.pesquisar(despesa)
 
 	carregaListaDespesas(despesas, true)
+}
+
+function qtdDias() {
+	let mesEscolhido = document.getElementById('mes').value
+	if (mesEscolhido == 2) {
+		document.getElementById('dia').max = 28
+	} else if (mesEscolhido == 4 || mesEscolhido == 6 || mesEscolhido == 9 || mesEscolhido == 11) {
+		document.getElementById('dia').max = 30
+	} else {
+		document.getElementById('dia').max = 31
+	}
 }
