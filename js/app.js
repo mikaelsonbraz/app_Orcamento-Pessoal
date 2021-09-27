@@ -199,8 +199,15 @@ function carregaListaDespesas(despesas = Array(), filtro = false) {
 			//remover despesa
 			let id = this.id.replace('id_despesa_', '')
 			bd.remover(id)
-			alert('Despesa Removida')
-			window.location.reload()
+			
+			//Exibindo modal ao excluir despesa
+			document.getElementById('modal_titulo_div2').className = 'modal-header text-success'
+			document.getElementById('modal_titulo2').innerHTML = 'Exclusão de Despesa'
+			document.getElementById('modal_msg2').innerHTML = 'Despesa excluída com sucesso'
+			document.getElementById('btn-voltar2').className = 'btn btn-success'
+	
+			$('#modalExcluirDespesa').modal('show')
+
 		}
 		linha.insertCell(4).append(btn)
 	})
